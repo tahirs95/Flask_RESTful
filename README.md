@@ -2,7 +2,10 @@
 Flask App working on RESTful apis and CRUD operations.
 
 #Library to install:
-pip install Flask
+pip install flask
+pip install flask_restful
+pip install flask_jwt
+pip install flask_sqlalchemy
 
 #How to run the app?
 python app.py
