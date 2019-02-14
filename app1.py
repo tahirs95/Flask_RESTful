@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, render_template
+import sqlite3
 
 stores = [{
     "name":"Imtiaz",
@@ -11,8 +12,18 @@ stores = [{
 app = Flask(__name__)
 
 @app.route('/')
-def home():
-    return render_template('index.html')
+def index():
+    connection = sqlite3.connect('data.db')
+    cursor = connection.cursor()
+    query = "SELECT * FROM items"
+    result = cursor.execute(query)
+    items = []
+    for row in result:
+        items.append({"name":row[0],"price":row[1]})
+    connection.close()    
+    return render_template('index1.html', items=items)
+# def home():
+#     return render_template('index.html')
 
 @app.route('/store', methods=['POST'])
 def create_store():
@@ -60,7 +71,7 @@ def get_items_in_store(name):
 
 
 
-# if __name__ == "__main__":
-#     app.run(port=5000)
+if __name__ == "__main__":
+    app.run(port=5000)
 # export FLASK_APP=app.py
 # flask run
